@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="stylesheet" href="./css/font.css">
+    <style>
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: hidden;
+        }
+    
+        #scroll::-webkit-scrollbar {
+            width: 6px;
+            border-radius: 15px;
+    
+        }
+    
+        #scroll::-webkit-scrollbar-track {
+            border-radius: 15px;
+    
+            width: 6px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+    
+        #scroll::-webkit-scrollbar-thumb {
+            border-radius: 15px;
+            width: 6px;
+            height: 40px;
+            background-color: var(--bg-yellow);
+        }
+        @keyframes peng_idle_left {
+            from {
+                background-position-x: 0px;
+            }
+
+            to {
+                background-position-x: -1375px;
+                transform-origin:bottom right;
+                transform: rotateZ(-10deg);
+            }
+        }
+        @keyframes peng_idle_right {
+            from {
+                background-position-x: 0px;
+            }
+
+            to {
+                background-position-x: -1375px;
+                transform-origin:bottom left;
+                transform: rotateZ(10deg);
+            }
+        }
+        @keyframes rope {
+            0%{
+                background-position-x: -345px;
+            }
+            25%{
+                background-position-x :-304px;
+            }
+            50%{
+                background-position-x :-345px;
+            }
+            75%{
+                background-position-x :-385px;
+            }
+            100% {
+                background-position-x: -345px;
+            }
+        }
+        @keyframes hold {
+             from {
+                background-position-x: 0px;
+            }
+
+            to {
+                background-position-x: -750px;
+            }
+        }
+        @keyframes finish {
+             from {
+                background-position-x: 0px;
+            }
+
+            to {
+                background-position-x: -500px;
+            }
+        }
+        @keyframes jump {
+             from {
+                background-position-x: 0px;
+            }
+
+            to {
+                background-position-x: -2250px;
+            }
+        }
+        .p-box{
+            /* position: fixed; */
+            /* left: 0; */
+            /* bottom: 0; */
+            width: 125px;
+            height: 139px;
+            will-change: transform;
+        }
+        .p-box.left .peng {
+            width: 125px;
+            position: absolute;
+            left: 0;
+            z-index: 3;
+            height: 100%;
+            /* background-position: center; */
+            background-image: url('./img/noarm_left.png');
+            background-size: 1375px 124px;
+            background-repeat: no-repeat;
+            animation: peng_idle_left 1s infinite steps(11) ;
+            animation-delay: 1.5s;
+        }
+        .p-box.left .rope{
+            position: absolute;
+            z-index: -1;
+            height: 100%;
+            width: 125px;
+            height: 139px;
+            /* transform: rotateY(180deg); */
+            /* background-position: center; */
+            /* transform: rotateY(180deg); */
+            background-image: url('./img/rope_left.png');
+            background-size: 1375px 124px;
+            background-repeat: no-repeat;
+            animation: peng_idle_left 1s infinite steps(11) ;
+            animation-delay: 1.5s;
+
+        }
+        .p-box.right .rope{
+            position: absolute;
+            z-index: -1;
+            height: 100%;
+            width: 123px;
+            height: 139px;
+            /* background-position: center; */
+            /* transform: rotateY(180deg); */
+            background-image: url('./img/rope.png');
+            background-size: 1375px 124px;
+            background-repeat: no-repeat;
+            animation: peng_idle_right 1s infinite steps(11) ;
+            animation-delay: 1s;
+
+        }
+        .p-box.right .rope.hold-arm{
+            position: absolute;
+            z-index: -1;
+            height: 100%;
+            width: 123px;
+            height: 139px;
+            /* background-position: center; */
+            /* transform: rotateY(180deg); */
+            background-image: url('./img/hold_arm.png');
+            background-size: 750px 124px;
+            background-repeat: no-repeat;
+            animation: hold 1s infinite steps(6) ;
+            /* animation-delay: 1s; */
+
+        }
+        .p-box.right .peng.hold {
+            width: 125px;
+            position: absolute;
+            left: 0;
+            z-index: 3;
+            height: 100%;
+            /* background-position: center; */
+            background-image: url('./img/hold.png');
+            background-size: 750px 124px;
+            background-repeat: no-repeat;
+            animation: hold 1s infinite  steps(6) ;
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            /* animation-delay: 1s; */
+
+        }
+
+        .p-box.right .peng {
+            width: 125px;
+            position: absolute;
+            left: 0;
+            z-index: 3;
+            height: 100%;
+            /* background-position: center; */
+            background-image: url('./img/noarm.png');
+            background-size: 1375px 124px;
+            background-repeat: no-repeat;
+            animation: peng_idle_right 1s infinite steps(11);
+            animation-delay: 1s;
+
+        }
+        .p-box.right .peng.jump {
+            width: 250px;
+            position: absolute;
+            left: 0;
+            z-index: 3;
+            left: -125px;
+            height: 100%;
+            /* background-position: center; */
+            background-image: url('./img/jump.png');
+            background-size: 2500px 124px;
+            background-repeat: no-repeat;
+            animation: jump .5s 1 steps(9) forwards;
+            /* animation-delay: 1s; */
+
+        }
+        .p-box.right .rope.jump-arm{
+            position: absolute;
+            z-index: -1;
+            height: 100%;
+            left: -125px;
+            width: 250px;
+            height: 122px;
+            /* background-position: center; */
+            /* transform: rotateY(180deg); */
+            background-image: url('./img/jump_arm.png');
+            background-size: 2500px 124px;
+            background-repeat: no-repeat;
+            animation: jump .5s 1 steps(9) forwards ;
+            /* animation-delay: 1s; */
+
+        }
+         .p-box.right .peng.finish {
+            width: 125px;
+            position: absolute;
+            left: 0;
+            z-index: 3;
+            height: 100%;
+            /* background-position: center; */
+            background-image: url('./img/finish.png');
+            background-size: 625px 124px;
+            background-repeat: no-repeat;
+            animation: finish .5s 1 steps(4) forwards;
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            /* animation-delay: -.5s; */
+
+        }
+        #real-rope-box{
+            position: absolute;
+            width: 677px;
+            z-index: 0;
+        }
+        #real-rope-box #real-rope{
+            background-image: url('./img/real_rope.png');
+            background-size: 1367px 20px;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation: rope 1s infinite ;
+            animation-delay: 1.4s;
+            /* animation-delay: -.7s; */
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex flex-wrap justify-content-start position-relative overflow-hidden"
+        style="width: 900px; height: 570px;background: transparent linear-gradient(180deg, #3A180F 0%, #A4391A 16%, #37170E 100%) ">
+        <div class="w-100 d-flex justify-content-between align-items-center">
+            <div class="fs-2 text-white ff-black p-3 w-25">1분 섯다</div>
+            <div class="d-flex fs-2 text-center ff-black align-items-center" style="height:48px">
+                <div id="repeat0" class="font-yellow me-1 rounded-1"
+                    style="width: 32px; height: 48px;background-color: #20270E;">0</div>
+                <div id="repeat1" class="font-yellow me-1 rounded-1"
+                    style="width: 32px; height: 48px;background-color: #20270E;">0</div>
+                <div id="repeat2" class="font-yellow me-1 rounded-1"
+                    style="width: 32px; height: 48px;background-color: #20270E;">0</div>
+                <div id="repeat3" class="font-yellow me-1 rounded-1"
+                    style="width: 32px; height: 48px;background-color: #20270E;">1</div>
+                <div class="text-white fs-7" id="repeat">회차</div>
+            </div>
+            <div class="fs-7 text-white text-end p-3 w-25">
+                <div>
+                    EOS 블록체인을 기준으로 1분단위로
+                </div>
+                <div>
+                    추첨하며 1440회차까지 진행
+                </div>
+                <div id="dateTime">
+
+                </div>
+            </div>
+        </div>
+        <div class="w-100 bg-gray position-relative" style="height:20px;">
+            <div class="w-100 bg-yellow position-relative" id="Timer" style="height:20px"></div>
+            <div class="position-absolute w-100 text-center" id="clock" style="top:0;left:0"></div>
+        </div>
+        <div class="m-3 me-2 rounded-2 d-flex position-relative align-items-end" id="canvas-cover" style="
+                background-image:url(./img/bg.png);    
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                height: 438px;
+                width: 676px;
+                ">
+            <div class="peng w-100 d-flex justify-content-center align-items-center position-absolute" style="bottom:10%;">
+                <div class="w-50 d-flex justify-content-center">
+                    <div class="p-box left">
+                        <div class="rope"></div>
+                        <div class="peng"></div>
+                    </div>
+                    <div class="p-box left">
+                        <div class="rope"></div>
+                        <div class="peng"></div>
+                    </div>
+                </div>
+                <div class="w-50 d-flex justify-content-center">
+                    <div class="p-box right">
+                        <div class="rope "></div>
+                        <div class="peng"></div>
+                    </div>
+                    <div class="p-box right">
+                        <div class="rope jump-arm"></div>
+                        <div class="peng"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tug position-absolute w-100 " id="real-rope-box" style="height:130px">
+                <div class="w-100  d-flex justify-content-center " id="real-rope" style="height:20px">
+                </div>
+            </div>
+            <div class="peng w-100 d-flex justify-content-center align-items-center position-absolute"style="bottom:10%;">
+                <div class="w-50 d-flex justify-content-center">
+                    <div class="p-box left">
+                        <!-- <div class="rope"></div> -->
+                        <div class="peng"></div>
+                    </div>
+                    <div class="p-box left">
+                        <!-- <div class="rope"></div> -->
+                        <div class="peng"></div>
+                    </div>
+                </div>
+                <div class="w-50 d-flex justify-content-center">
+                    <div class="p-box right">
+                        <!-- <div class="rope"></div> -->
+                        <div class="peng "></div>
+                    </div>
+                    <div class="p-box right">
+                        <!-- <div class="rope"></div> -->
+                        <div class="peng jump"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="m-3 ms-2 bg-opacity-25 bg-black rounded-2" style="width: 176px;height: 438px;">
+            <div class="board w-100 text-center ff-b text-white p-2 bg-opacity-25 bg-black rounded-2">회차별 결과</div>
+            <div class="text-white text-center m-2 fs-7 ff-b ">
+                <div class="" id="scroll" style="height: 390px;overflow-y: scroll;overflow-x: hidden;">
+    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="/js/main.js"></script> -->
+    <script src="./js/jquery.js"></script>
+    <script src="./js/js.min.js"></script>
+</body>
+</html>
